@@ -29,6 +29,7 @@ function resultFile() {
 
 async function getFailedSpecs() {
     try {
+        log('file content is', await readFile(resultFile(), 'utf8'))
         return JSON.parse(await readFile(resultFile(), 'utf8'));
     } catch (err) {
         return [];
