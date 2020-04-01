@@ -39,8 +39,8 @@ async function updateResultFile(failedSpecs) {
     const savedSpecs = await getFailedSpecs();
     log('savedSpecs are', savedSpecs);
     failedSpecs.forEach(savedSpecs.push, savedSpecs);
-    await writeFile(resultFile(), JSON.stringify(savedSpecs));
-    console.log(await getFailedSpecs());
+    await writeFile(resultFile(), JSON.stringify(Array.from(new Set(savedSpecs))));
+    console.log(process.version, await getFailedSpecs());
 }
 
 function ProtractorRetry(opts = {}) {
