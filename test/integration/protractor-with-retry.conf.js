@@ -11,6 +11,9 @@ exports.config = {
         shardTestFiles: true,
         maxInstances: 4,
         browserName: 'chrome',
+        chromeOptions: {
+            args: ['--headless']
+        }
     },
 
     onPrepare() {
