@@ -32,6 +32,7 @@ async function getFailedSpecs() {
         log('file content is', await readFile(resultFile(), 'utf8'))
         return JSON.parse(await readFile(resultFile(), 'utf8'));
     } catch (err) {
+        console.error(err);
         return [];
     }
 }
@@ -39,7 +40,7 @@ async function getFailedSpecs() {
 async function updateResultFile(failedSpecs) {
     const savedSpecs = await getFailedSpecs();
     log('savedSpecs are', savedSpecs);
-    failedSpecs.forEach(savedSpecs.push, savedSpecs);
+    savedSpecs.push(...failedSpecs);
     log('savedSpecs now are', savedSpecs);
     await writeFile(resultFile(), JSON.stringify(Array.from(new Set(savedSpecs))));
 }
