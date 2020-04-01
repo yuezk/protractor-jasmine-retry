@@ -1,3 +1,6 @@
+# Project specific
+protractorFailedSpecs
+
 # Logs
 logs
 *.log
