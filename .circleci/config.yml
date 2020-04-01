@@ -2,7 +2,9 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
 jobs:
-  build-and-test: &build-and-test
+  build-and-test: &build-common
+    docker:
+      - image: circleci/node
     steps:
       - checkout
       - node/with-cache:
@@ -10,15 +12,15 @@ jobs:
             - run: yarn install
             - run: yarn test
   node-lts:
-    <<: *build-and-test
+    <<: *build-common
     docker:
       - image: circleci/node:lts-browsers
   node-10:
-    <<: *build-and-test
+    <<: *build-common
     docker:
       - image: circleci/node:chakracore-10-browsers
   node-8:
-    <<: *build-and-test
+    <<: *build-common
     docker:
       - image: circleci/node:chakracore-8-browsers
 workflows:
