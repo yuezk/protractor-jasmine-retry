@@ -29,20 +29,19 @@ function resultFile() {
 
 async function getFailedSpecs() {
     try {
-        log('file content is', await readFile(resultFile(), 'utf8'))
         return JSON.parse(await readFile(resultFile(), 'utf8'));
     } catch (err) {
-        console.error(err);
         return [];
     }
 }
 
 async function updateResultFile(failedSpecs) {
     const savedSpecs = await getFailedSpecs();
-    log('savedSpecs are', savedSpecs);
     savedSpecs.push(...failedSpecs);
-    log('savedSpecs now are', savedSpecs);
-    await writeFile(resultFile(), JSON.stringify(Array.from(new Set(savedSpecs))));
+    await writeFile(
+        resultFile(),
+        JSON.stringify(Array.from(new Set(savedSpecs)))
+    );
 }
 
 function ProtractorRetry(opts = {}) {
@@ -111,7 +110,6 @@ function ProtractorRetry(opts = {}) {
                 if (maxAttempts <= 0) {
                     return;
                 }
-                log('failed specs are', failedSpecs);
                 await updateResultFile(failedSpecs);
             },
         }
