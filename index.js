@@ -7,7 +7,7 @@ const { argv } = require('yargs');
 const stacktraceParser = require('stacktrace-parser');
 const unparse = require('yargs-unparser');
 const spawn = require('cross-spawn');
-const mkdirp = require('mkdirp');
+const makeDir = require('make-dir');
 const chalk = require('chalk');
 const semver = require('semver');
 
@@ -103,7 +103,7 @@ function ProtractorRetry(opts = {}) {
                 // Clean the result folder for the first run
                 if (retriedTimes === 0) {
                     await del(resultPath);
-                    await mkdirp(resultPath);
+                    await makeDir(resultPath);
                 }
             },
             async postResults() {

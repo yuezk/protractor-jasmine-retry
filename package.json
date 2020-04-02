@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A Protractor plugin to automatically re-run failed test specs for Jasmine test framework.",
   "main": "index.js",
-  "files": ["index.js"],
+  "files": [
+    "index.js"
+  ],
   "repository": "git@github.com:yuezk/protractor-jasmine-retry.git",
   "author": "yuezk <yuezk001@gmail.com>",
   "license": "MIT",
@@ -17,7 +19,7 @@
     "chalk": "^3.0.0",
     "cross-spawn": "^7.0.1",
     "del": "^5.1.0",
-    "mkdirp": "^1.0.3",
+    "make-dir": "^3.0.2",
     "semver": "^7.1.3",
     "stacktrace-parser": "^0.1.9",
     "yargs": "^15.3.1",
