@@ -1,4 +1,4 @@
-# protractor-jasmine-retry
+# protractor-jasmine-retry [![CircleCI](https://circleci.com/gh/yuezk/protractor-jasmine-retry.svg?style=svg)](https://circleci.com/gh/yuezk/protractor-jasmine-retry)
 A Protractor plugin to automatically re-run failed test specs for Jasmine test framework.
 
 Inspired by [protractor-retry](https://github.com/yahoo/protractor-retry), but added some improvements.
