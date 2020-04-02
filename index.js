@@ -48,7 +48,6 @@ function ProtractorRetry(opts = {}) {
     resultPath = opts.resultPath || DEFAULT_RESULT_PATH;
 
     let allSpecs;
-
     const failedSpecs = new Set();
 
     function extractSpecFile(stack) {
