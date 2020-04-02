@@ -9,7 +9,6 @@ const unparse = require('yargs-unparser');
 const spawn = require('cross-spawn');
 const makeDir = require('make-dir');
 const chalk = require('chalk');
-const semver = require('semver');
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -70,7 +69,8 @@ function ProtractorRetry(opts = {}) {
                 failedSpecs.add(file);
             } else {
                 log(chalk.red('Failed to extract the failed spec file, treat all spec files as the failed specs.'));
-                if (semver.lt(process.version, '12.0.0')) {
+                const [major] = process.version.match(/\d+/);
+                if (parseInt(major, 10) < 12) {
                     log(chalk.red('Please consider upgrading Node.js to v12.x or newer to fix this issue.'));
                 }
                 log('The stack is:', chalk.yellow(expectation.stack));
