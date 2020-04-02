@@ -37,7 +37,7 @@ async function getFailedSpecs() {
 
 async function updateResultFile(failedSpecs) {
     const savedSpecs = await getFailedSpecs();
-    savedSpecs.push(...failedSpecs);
+    savedSpecs.push.apply(savedSpecs, Array.from(failedSpecs));
     await writeFile(
         resultFile(),
         JSON.stringify(Array.from(new Set(savedSpecs)))
@@ -155,13 +155,12 @@ ProtractorRetry.afterLaunch = async function afterLaunch(exitCode) {
 
     const specs = failedSpecs.join(',');
     // Generate the protractor command
-    const protractorArgs = unparse({
-        ...argv,
+    const protractorArgs = unparse(Object.assign({}, argv, {
         specs,
         suite: specs ? '' : null, // Override suite to empty if specs is not empty
         retry: retriedTimes + 1,
         disableChecks: true
-    });
+    }));
 
     log('Re-running tests, attempt:', retriedTimes + 1);
     log('Re-running the following test files:', specs);
