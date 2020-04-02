@@ -7,9 +7,8 @@ const { argv } = require('yargs');
 const stacktraceParser = require('stacktrace-parser');
 const unparse = require('yargs-unparser');
 const spawn = require('cross-spawn');
-const mkdirp = require('mkdirp');
+const makeDir = require('make-dir');
 const chalk = require('chalk');
-const semver = require('semver');
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
@@ -37,8 +36,11 @@ async function getFailedSpecs() {
 
 async function updateResultFile(failedSpecs) {
     const savedSpecs = await getFailedSpecs();
-    savedSpecs.push(...failedSpecs);
-    await writeFile(resultFile(), JSON.stringify([...new Set(savedSpecs)]));
+    savedSpecs.push.apply(savedSpecs, Array.from(failedSpecs));
+    await writeFile(
+        resultFile(),
+        JSON.stringify(Array.from(new Set(savedSpecs)))
+    );
 }
 
 function ProtractorRetry(opts = {}) {
@@ -46,7 +48,6 @@ function ProtractorRetry(opts = {}) {
     resultPath = opts.resultPath || DEFAULT_RESULT_PATH;
 
     let allSpecs;
-
     const failedSpecs = new Set();
 
     function extractSpecFile(stack) {
@@ -67,7 +68,8 @@ function ProtractorRetry(opts = {}) {
                 failedSpecs.add(file);
             } else {
                 log(chalk.red('Failed to extract the failed spec file, treat all spec files as the failed specs.'));
-                if (semver.lt(process.version, '12.0.0')) {
+                const [major] = process.version.match(/\d+/);
+                if (parseInt(major, 10) < 12) {
                     log(chalk.red('Please consider upgrading Node.js to v12.x or newer to fix this issue.'));
                 }
                 log('The stack is:', chalk.yellow(expectation.stack));
@@ -100,7 +102,7 @@ function ProtractorRetry(opts = {}) {
                 // Clean the result folder for the first run
                 if (retriedTimes === 0) {
                     await del(resultPath);
-                    await mkdirp(resultPath);
+                    await makeDir(resultPath);
                 }
             },
             async postResults() {
@@ -152,13 +154,12 @@ ProtractorRetry.afterLaunch = async function afterLaunch(exitCode) {
 
     const specs = failedSpecs.join(',');
     // Generate the protractor command
-    const protractorArgs = unparse({
-        ...argv,
+    const protractorArgs = unparse(Object.assign({}, argv, {
         specs,
         suite: specs ? '' : null, // Override suite to empty if specs is not empty
         retry: retriedTimes + 1,
         disableChecks: true
-    });
+    }));
 
     log('Re-running tests, attempt:', retriedTimes + 1);
     log('Re-running the following test files:', specs);
