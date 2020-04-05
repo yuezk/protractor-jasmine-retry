@@ -1,0 +1,12 @@
+image:
+    - Visual Studio 2019
+
+install:
+    - ps: Install-Product node LTS
+    - yarn install
+
+test_script:
+    - node --version
+    - yarn test
+
+build: off
