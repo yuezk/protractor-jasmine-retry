@@ -9,6 +9,14 @@
   "repository": "git@github.com:yuezk/protractor-jasmine-retry.git",
   "author": "yuezk <yuezk001@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "protractor",
+    "protractor-retry",
+    "protractor-plugin",
+    "jasmine",
+    "automation",
+    "e2e"
+  ],
   "scripts": {
     "integration": "webdriver-manager update && protractor ./test/integration/protractor-with-retry.conf.js",
     "ut": "jasmine --config=test/ut/jasmine.json",
