@@ -1,4 +1,4 @@
-# protractor-jasmine-retry [![CircleCI](https://circleci.com/gh/yuezk/protractor-jasmine-retry.svg?style=svg)](https://circleci.com/gh/yuezk/protractor-jasmine-retry) [![Build status](https://ci.appveyor.com/api/projects/status/0xq9om9mbe67ew8u/branch/master?svg=true)](https://ci.appveyor.com/project/yuezk/protractor-jasmine-retry/branch/master)
+# protractor-jasmine-retry [![CircleCI](https://circleci.com/gh/yuezk/protractor-jasmine-retry.svg?style=svg)](https://circleci.com/gh/yuezk/protractor-jasmine-retry) [![Build status](https://ci.appveyor.com/api/projects/status/0xq9om9mbe67ew8u/branch/master?svg=true&passingText=Windows%20-%20OK&failingText=Windows%20-%20Fail)](https://ci.appveyor.com/project/yuezk/protractor-jasmine-retry/branch/master)
 
 A Protractor plugin to automatically re-run failed test specs for Jasmine test framework.
 
