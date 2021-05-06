@@ -44,6 +44,8 @@ async function updateResultFile(failedSpecs) {
 }
 
 function ProtractorRetry(opts = {}) {
+    let initialized = false;
+
     maxAttempts = typeof opts.maxAttempts === 'number' ? opts.maxAttempts : 2;
     resultPath = opts.resultPath || DEFAULT_RESULT_PATH;
 
@@ -101,8 +103,11 @@ function ProtractorRetry(opts = {}) {
 
                 // Clean the result folder for the first run
                 if (retriedTimes === 0) {
-                    await del(resultPath);
-                    await makeDir(resultPath);
+                    if (!initialized) {
+                        await del(resultPath, { force: true });
+                        await makeDir(resultPath);
+                        initialized = true;
+                    }
                 }
             },
             async postResults() {
