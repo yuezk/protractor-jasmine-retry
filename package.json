@@ -1,6 +1,6 @@
 {
   "name": "protractor-jasmine-retry",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Protractor plugin to automatically re-run failed test specs for Jasmine test framework.",
   "main": "index.js",
   "files": [
